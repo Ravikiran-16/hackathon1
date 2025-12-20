@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Alumni Dashboard</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #0f2b33;
+      color: #f0f0f0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+    .profile-card {
+      background: #1b3e47;
+      padding: 2rem;
+      border-radius: 12px;
+      max-width: 600px;
+      width: 100%;
+      box-shadow: 0 6px 14px rgba(0,0,0,0.4);
+    }
+    .profile-card h2 {
+      margin-top: 0;
+      text-align: center;
+      color: #62f3d4;
+    }
+    .profile-card p {
+      margin: 0.5rem 0;
+    }
+    .highlight-link {
+      color: #62f3d4;
+      text-decoration: underline;
+    }
+    .btn {
+      display: inline-block;
+      margin-top: 1.5rem;
+      background: #00b4d8;
+      color: white;
+      padding: 0.7rem 1.2rem;
+      border-radius: 6px;
+      text-decoration: none;
+      border: none;
+      cursor: pointer;
+    }
+    .btn:hover {
+      background: #0096c7;
+    }
+    .btn-container {
+      text-align: center;
+      margin-top: 2rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="profile-card" id="profile">
+    <h2>Alumni Dashboard</h2>
+    <p><strong>Name:</strong> <span id="pName"></span></p>
+    <p><strong>Passout Year:</strong> <span id="pPassout"></span></p>
+    <p><strong>Companies:</strong> <span id="pCompanies"></span></p>
+    <p><strong>Job Title:</strong> <span id="pJob"></span></p>
+    <p><strong>Location:</strong> <span id="pLocation"></span></p>
+    <p><strong>Gender:</strong> <span id="pGender"></span></p>
+    <p><strong>Degree:</strong> <span id="pDegree"></span></p>
+    <p><strong>Major Course:</strong> <span id="pMajor"></span></p>
+    <p><strong>Experience:</strong> <span id="pExp"></span> years</p>
+    <p><strong>LinkedIn:</strong> <span id="pLinkedin"></span></p>
+    <p><strong>GitHub:</strong> <span id="pGithub"></span></p>
+    <p><strong>Mentorship:</strong> <span id="pMentorship"></span></p>
+    <p><strong>Donations:</strong> <span id="pDonations"></span></p>
+
+    <div class="btn-container">
+      <a href="alumni_details.html" class="btn">✏️ Edit Details</a>
+    </div>
+  </div>
+
+  <script>
+    const saved = localStorage.getItem('alumniData');
+    if (saved) {
+      const data = JSON.parse(saved);
+      document.getElementById('pName').textContent = data.name;
+      document.getElementById('pPassout').textContent = data.passoutYear;
+      document.getElementById('pCompanies').textContent = data.companies || '-';
+      document.getElementById('pJob').textContent = data.jobTitle;
+      document.getElementById('pLocation').textContent = data.location;
+      document.getElementById('pGender').textContent = data.gender;
+      document.getElementById('pDegree').textContent = data.degree;
+      document.getElementById('pMajor').textContent = data.major;
+      document.getElementById('pExp').textContent = data.experience || '0';
+      document.getElementById('pLinkedin').innerHTML =
+        `<a class="highlight-link" href="${data.linkedin}" target="_blank">${data.linkedin}</a>`;
+      document.getElementById('pGithub').innerHTML =
+        data.github ? `<a class="highlight-link" href="${data.github}" target="_blank">${data.github}</a>` : '-';
+      document.getElementById('pMentorship').textContent = data.mentorship;
+      document.getElementById('pDonations').textContent = data.donations || '-';
+    } else {
+      document.getElementById('profile').innerHTML =
+        "<p>No alumni data found. <a href='alumni_details.html' class='highlight-link'>Enter details here</a>.</p>";
+    }
+  </script>
+</body>
+</html>

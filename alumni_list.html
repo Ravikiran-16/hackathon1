@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Saved Alumni List</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #0f2b33;
+      color: #f0f0f0;
+    }
+    .container {
+      max-width: 900px;
+      margin: 2rem auto;
+      padding: 0 1rem;
+    }
+    .card {
+      background: #1b3e47;
+      margin-bottom: 1.5rem;
+      padding: 1.5rem;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    }
+    .card h3 {
+      margin-top: 0;
+      color: #62f3d4;
+    }
+    .highlight-link {
+      color: #62f3d4;
+      text-decoration: underline;
+    }
+    .btn {
+      display: inline-block;
+      margin-top: 1rem;
+      background: #00b4d8;
+      color: white;
+      padding: 0.5rem 1rem;
+      border-radius: 6px;
+      text-decoration: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Saved Alumni List</h2>
+    <div id="alumniList"></div>
+    <a href="alumni_details.html" class="btn">➕ Add New Alumni</a>
+  </div>
+
+  <script>
+    const container = document.getElementById('alumniList');
+    const alumniList = JSON.parse(localStorage.getItem('alumniList')) || [];
+
+    if (alumniList.length === 0) {
+      container.innerHTML = "<p>No alumni saved yet. <a href='alumni_details.html' class='highlight-link'>Add one here</a>.</p>";
+    } else {
+      alumniList.forEach((a, index) => {
+        const card = document.createElement('div');
+        card.className = "card";
+        card.innerHTML = `
+          <h3>${a.name}</h3>
+          <p><strong>Passout Year:</strong> ${a.passoutYear}</p>
+          <p><strong>Companies:</strong> ${a.companies || '-'}</p>
+          <p><strong>Job Title:</strong> ${a.jobTitle}</p>
+          <p><strong>Location:</strong> ${a.location}</p>
+          <p><strong>Gender:</strong> ${a.gender}</p>
+          <p><strong>Degree:</strong> ${a.degree}</p>
+          <p><strong>Major:</strong> ${a.major}</p>
+          <p><strong>Experience:</strong> ${a.experience || '0'} years</p>
+          <p><strong>LinkedIn:</strong> <a class="highlight-link" href="${a.linkedin}" target="_blank">${a.linkedin}</a></p>
+          <p><strong>GitHub:</strong> ${a.github ? `<a class="highlight-link" href="${a.github}" target="_blank">${a.github}</a>` : '-'}</p>
+          <p><strong>Mentorship:</strong> ${a.mentorship}</p>
+          <p><strong>Donations:</strong> ${a.donations || '-'}</p>
+        `;
+        container.appendChild(card);
+      });
+    }
+  </script>
+</body>
+</html>
